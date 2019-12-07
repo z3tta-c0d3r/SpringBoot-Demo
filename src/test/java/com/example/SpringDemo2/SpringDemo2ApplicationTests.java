@@ -10,7 +10,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 class SpringDemo2ApplicationTests {
 
 	@Test
-	void contextLoads() {
-	}
+	void contextLoads() {}
 
 }
