@@ -1,5 +1,6 @@
 #security:
 #  oauth2:
-#    client:
-#      client-id: Zeta
-#      client-secret: Secret
+#    resource:
+#      userInfoUri: http://localhost:8080/validateUser
+#server:
+#  port: 9090
