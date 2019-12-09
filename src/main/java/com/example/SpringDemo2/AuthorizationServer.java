@@ -28,7 +28,9 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
                 .inMemory()
                 .withClient("javainuse-client")
                 .secret("{noop}javainuse-secret")
-                .authorizedGrantTypes("client_credentials")
-                .scopes("resource-server-read", "resource-server-write");
+                //.authorizedGrantTypes("client_credentials")
+                //.scopes("resource-server-read", "resource-server-write");
+                .authorizedGrantTypes("password","refresh_token")
+                .scopes("read", "write");
     }
 }
