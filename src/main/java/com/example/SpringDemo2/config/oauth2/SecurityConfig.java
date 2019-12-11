@@ -1,5 +1,6 @@
-package com.example.SpringDemo2.config;
+package com.example.SpringDemo2.config.oauth2;
 
+import com.example.SpringDemo2.config.details.CrmUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +21,6 @@ import org.springframework.security.oauth2.provider.approval.TokenStoreUserAppro
 import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
-import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 @Configuration
 @EnableWebSecurity
@@ -56,14 +56,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/test","/signup").permitAll()
+                .antMatchers("/testadmin","testuser","/test","/signup","/h2-console/**").permitAll()
                 .antMatchers("/oauth/token").permitAll()
                 //.antMatchers("/api/**").authenticated()
                 //.antMatchers("/api/**").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()
-                .realmName("CRM_REALM");
+                .realmName("CRM_REALM").and()
+                .headers().frameOptions().sameOrigin();
     }
 
 

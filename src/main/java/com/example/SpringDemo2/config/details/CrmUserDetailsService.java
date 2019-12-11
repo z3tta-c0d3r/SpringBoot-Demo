@@ -1,5 +1,6 @@
-package com.example.SpringDemo2.config;
+package com.example.SpringDemo2.config.details;
 
+import com.example.SpringDemo2.config.details.CrmUserDetails;
 import com.example.SpringDemo2.model.User;
 import com.example.SpringDemo2.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

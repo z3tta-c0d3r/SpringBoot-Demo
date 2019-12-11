@@ -1,5 +1,6 @@
-package com.example.SpringDemo2.config;
+package com.example.SpringDemo2.config.oauth2;
 
+import com.example.SpringDemo2.config.details.CrmUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
