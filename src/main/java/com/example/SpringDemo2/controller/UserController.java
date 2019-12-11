@@ -17,18 +17,12 @@ import java.util.Arrays;
 
 @RestController
 @Slf4j
-@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+//@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    /**
-     *
-     * user signup
-     * @param user
-     * @return
-     */
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ResponseEntity<?> signup(@RequestBody User user) {
         user.setRoles(Arrays.asList(new UserRole("USER")));
