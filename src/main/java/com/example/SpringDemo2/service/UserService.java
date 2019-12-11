@@ -43,11 +43,14 @@ public class UserService {
     private void setupDefaultUser() {
         //-- just to make sure there is an ADMIN user exist in the database for testing purpose
         if (userRepository.count() == 0) {
-            User user = User.builder()
+            /*User user = User.builder()
                     .username("crmadmin")
-                    .password("adminpass")
+                    .password(encoder().encode("adminpass"))
                     .roles(Arrays.asList(new UserRole("USER"), new UserRole("ADMIN")))
                     .build();
+
+             */
+            //userRepository.save(user);
         }
     }
 
