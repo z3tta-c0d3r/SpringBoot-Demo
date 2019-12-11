@@ -1,4 +1,4 @@
-package com.example.SpringDemo2.config;
+package com.example.SpringDemo2.config.details;
 
 import java.util.ArrayList;
 import java.util.Collection;

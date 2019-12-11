@@ -3,7 +3,6 @@ package com.example.SpringDemo2.service;
 import com.example.SpringDemo2.model.User;
 import com.example.SpringDemo2.model.UserRole;
 import com.example.SpringDemo2.repository.UserRepository;
-import javafx.util.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
