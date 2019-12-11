@@ -11,7 +11,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 
 @Configuration
 @EnableAuthorizationServer
-public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
+public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     private static final String CLIENT_ID = "javainuse-client";
     private static final String CLIENT_SECRET = "{noop}javainuse-secret";

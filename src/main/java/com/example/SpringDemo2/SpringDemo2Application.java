@@ -23,6 +23,7 @@ public class SpringDemo2Application {
 		SpringApplication.run(SpringDemo2Application.class, args);
 	}
 
+	/*
 	//This method will be used to check if the user has a valid token to access the resource
 	@RequestMapping("/validateUser")
 	public Principal user(Principal user) {
@@ -42,5 +43,6 @@ public class SpringDemo2Application {
 		}
 
 	}
+	 */
 
 }
