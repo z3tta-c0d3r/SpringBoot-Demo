@@ -43,8 +43,8 @@ class SpringDemo2ApplicationTests {
 		user.setUsername("testuser1");
 		user.setPassword("testuser2");
 		user.setRoles(Arrays.asList(new UserRole("USER")));
-		User newUser = userService.addUser(user);
-		log.debug(newUser.getUsername());
+		//User newUser = userService.addUser(user);
+		//log.debug(newUser.getUsername());
 	}
 
 }
