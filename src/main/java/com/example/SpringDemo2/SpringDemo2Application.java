@@ -2,6 +2,7 @@ package com.example.SpringDemo2;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,7 +16,9 @@ import java.security.Principal;
 
 @RestController
 @EnableResourceServer
-@SpringBootApplication
+//@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.example.SpringDemo2", exclude = {
+		WebMvcAutoConfiguration.class })
 public class SpringDemo2Application {
 
 	public static void main(String[] args) {
@@ -23,13 +26,13 @@ public class SpringDemo2Application {
 		SpringApplication.run(SpringDemo2Application.class, args);
 	}
 
-	/*
+
 	//This method will be used to check if the user has a valid token to access the resource
 	@RequestMapping("/validateUser")
 	public Principal user(Principal user) {
 		return user;
 	}
-
+	/*
 	@Configuration
 	protected static class AuthenticationManagerConfiguration extends GlobalAuthenticationConfigurerAdapter {
 

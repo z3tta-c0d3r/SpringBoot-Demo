@@ -17,7 +17,6 @@ import java.util.Arrays;
 
 @RestController
 @Slf4j
-//@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class UserController {
 
     @Autowired
