@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
-@PreAuthorize("hasAuthority('USER')")
 public class TestController {
 
     @RequestMapping("/test")

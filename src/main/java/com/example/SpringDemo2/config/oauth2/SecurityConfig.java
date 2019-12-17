@@ -6,10 +6,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
+import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -25,7 +28,13 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled=true, prePostEnabled=true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    /*
+    @Autowired
+    private CustomPermissionEvaluator permissionEvaluator;
+     */
 
     @Autowired
     private ClientDetailsService clientDetailsService;
@@ -36,6 +45,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.debug(true);
     }
 
     @Autowired
@@ -54,7 +68,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/testroleadmin","/testroleuser","/test","/signup","/h2-console/**").permitAll()
+                .antMatchers("/testroleadmin","/testroleuser","/test","/h2-console/**").permitAll()
+                .antMatchers("/signup").permitAll()
                 .antMatchers("/oauth/token").permitAll()
                 //.antMatchers("/api/**").authenticated()
                 //.antMatchers("/api/**").hasRole("USER")
@@ -94,5 +109,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         store.setTokenStore(tokenStore);
         return store;
     }
+/*
+    @Bean
+    public MethodSecurityExpressionHandler methodSecurityExpressionHandler() {
+        DefaultMethodSecurityExpressionHandler handler = new DefaultMethodSecurityExpressionHandler();
+        handler.setPermissionEvaluator(permissionEvaluator);
+        return handler;
+    }
+
+ */
 
 }
