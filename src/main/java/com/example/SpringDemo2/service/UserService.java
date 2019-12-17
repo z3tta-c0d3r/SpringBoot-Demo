@@ -25,7 +25,7 @@ public class UserService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    @PreAuthorize("hasAuthority('Admin')")
+    @PreAuthorize("hasAuthority('ADMIN)")
     //@PreAuthorize("isAnonymous()")
     //@PreAuthorize("hasPermission(#user, 'admin')")
     //@PreAuthorize("isAuthenticated()")
