@@ -3,6 +3,7 @@ package com.example.SpringDemo2.controller;
 import com.example.SpringDemo2.model.User;
 import com.example.SpringDemo2.model.UserRole;
 import com.example.SpringDemo2.service.UserService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,11 +18,16 @@ import java.util.Arrays;
 
 @RestController
 @Slf4j
+@AllArgsConstructor
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
+    /**
+     * Create one user in DB
+     * @param user User
+     * @return ResponseEntity<?>
+     */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ResponseEntity<?> signup(@RequestBody User user) {
