@@ -69,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/testroleadmin","/testroleuser","/test","/h2-console/**").permitAll()
-                .antMatchers("/signup").permitAll()
+                .antMatchers("/signup").hasRole("ADMIN")
                 .antMatchers("/oauth/token").permitAll()
                 //.antMatchers("/api/**").authenticated()
                 //.antMatchers("/api/**").hasRole("USER")
@@ -87,6 +87,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    /*
     @Bean
     public TokenStore tokenStore() {
         return new InMemoryTokenStore();
@@ -109,7 +110,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         store.setTokenStore(tokenStore);
         return store;
     }
-/*
+
     @Bean
     public MethodSecurityExpressionHandler methodSecurityExpressionHandler() {
         DefaultMethodSecurityExpressionHandler handler = new DefaultMethodSecurityExpressionHandler();

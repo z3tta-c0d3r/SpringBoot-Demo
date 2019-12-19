@@ -1,5 +1,6 @@
 package com.example.SpringDemo2;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
@@ -16,9 +17,10 @@ import java.security.Principal;
 
 @RestController
 @EnableResourceServer
-//@SpringBootApplication
+@EnableAuthorizationServer
 @SpringBootApplication(scanBasePackages = "com.example.SpringDemo2", exclude = {
 		WebMvcAutoConfiguration.class })
+@Slf4j
 public class SpringDemo2Application {
 
 	public static void main(String[] args) {
@@ -30,8 +32,11 @@ public class SpringDemo2Application {
 	//This method will be used to check if the user has a valid token to access the resource
 	@RequestMapping("/validateUser")
 	public Principal user(Principal user) {
+		log.debug("Validateuser1: " + user.getName());
+		log.debug("validateuser2: " + user.toString());
 		return user;
 	}
+
 	/*
 	@Configuration
 	protected static class AuthenticationManagerConfiguration extends GlobalAuthenticationConfigurerAdapter {
