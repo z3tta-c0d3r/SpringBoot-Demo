@@ -25,10 +25,6 @@ public class UserService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    @PreAuthorize("hasAuthority('ADMIN')")
-    //@PreAuthorize("isAnonymous()")
-    //@PreAuthorize("hasPermission(#user, 'admin')")
-    //@PreAuthorize("isAuthenticated()")
     public User addUser(@NotNull User user) {
         String pwdencode = encoder().encode(user.getPassword());
         user.setPassword(pwdencode);
