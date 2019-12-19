@@ -53,7 +53,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private JwtAccessTokenConverter tokenConverter;
 
 
-    // jwt
+    /**
+     * Converter token with Jwt
+     * @return JwtAccessTokenConverter
+     */
     @Bean
     public JwtAccessTokenConverter tokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
@@ -61,11 +64,22 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         return converter;
     }
 
+    /**
+     * Store token jwt
+     * @param tokenConverter JwtAccessTokenConverter
+     * @return TokenStore
+     */
     @Bean
     public TokenStore tokenStore(JwtAccessTokenConverter tokenConverter) {
         return new JwtTokenStore(tokenConverter());
     }
 
+    /**
+     * Services of get token
+     * @param tokenStore  TokenStore
+     * @param tokenConverter JwtAccessTokenConverter
+     * @return DefaultTokenServices
+     */
     @Bean
     DefaultTokenServices tokenServices(TokenStore tokenStore, JwtAccessTokenConverter tokenConverter) {
         DefaultTokenServices tokenServices = new DefaultTokenServices();
@@ -74,6 +88,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         return tokenServices;
     }
 
+    /**
+     *  Handler approve new user
+     * @param tokenStore TokenStore
+     * @param clientDetailsService ClientDetailsService
+     * @return TokenStoreUserApprovalHandler
+     */
     @Bean
     public TokenStoreUserApprovalHandler userApprovalHandler(TokenStore tokenStore, ClientDetailsService clientDetailsService) {
         TokenStoreUserApprovalHandler handler = new TokenStoreUserApprovalHandler();
@@ -83,6 +103,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         return handler;
     }
 
+    /**
+     * Store user approved
+     * @param tokenStore TokenStore
+     * @return ApprovalStore
+     * @throws Exception
+     */
     @Bean
     public ApprovalStore approvalStore(TokenStore tokenStore) throws Exception {
         TokenApprovalStore store = new TokenApprovalStore();
@@ -91,18 +117,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     }
     // jwt
 
+    /**
+     * Configure an initial user for oauth authentication
+     * @param clients ClientDetailsServiceConfigurer
+     * @throws Exception
+     */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        /*clients.inMemory()
-                .withClient("crmClient1")
-                .secret("{noop}crmSuperSecret")
-                .authorizedGrantTypes("password", "refresh_token")
-                .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT", "ROLE_ADMIN")
-                .scopes("read", "write", "trust")
-                //.accessTokenValiditySeconds(ONE_DAY)
-                .accessTokenValiditySeconds(300)
-                .refreshTokenValiditySeconds(THIRTY_DAYS);
-         */
         clients.inMemory()
                 .withClient("crmClient1")
                 .secret("{noop}crmSuperSecret")
@@ -114,22 +135,28 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .refreshTokenValiditySeconds(THIRTY_DAYS);
     }
 
+    /**
+     * Configure authentication for a token services
+     * @param endpoints
+     * @throws Exception
+     */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        //endpoints.tokenStore(tokenStore).userApprovalHandler(userApprovalHandler)
-        //        .authenticationManager(authenticationManager);
-        //endpoints.tokenStore(tokenStore).userApprovalHandler(userApprovalHandler)
-        //        .authenticationManager(authenticationManager)
-        //        .userDetailsService(crmUserDetailsService);
         endpoints.tokenServices(tokenServices);
     }
 
+    /**
+     * Permit token access is authenticated
+     * @param oauthServer AuthorizationServerSecurityConfigurer
+     * @throws Exception
+     */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
         //oauthServer.realm(REALM);
-        oauthServer.allowFormAuthenticationForClients()
-                .tokenKeyAccess("isAuthenticated()")
-                .checkTokenAccess("isAuthenticated()");
+        oauthServer.tokenKeyAccess("permitAll()")
+                .checkTokenAccess("isAuthenticated()")
+                //.passwordEncoder(this.passwordEncoder)
+                .allowFormAuthenticationForClients();
 
     }
 }

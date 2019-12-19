@@ -26,30 +26,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Autowired
     private DefaultTokenServices tokenServices;
 
-    public JwtAccessTokenConverter tokenConverter() {
-        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey("1234567890");
-        return converter;
-    }
-
-
-    public TokenStore tokenStore(JwtAccessTokenConverter tokenConverter) {
-        return new JwtTokenStore(tokenConverter);
-    }
-
-
-    DefaultTokenServices tokenServices(TokenStore tokenStore, JwtAccessTokenConverter tokenConverter) {
-        DefaultTokenServices tokenServices = new DefaultTokenServices();
-        tokenServices.setTokenStore(tokenStore);
-        tokenServices.setTokenEnhancer(tokenConverter);
-        return tokenServices;
-    }
-
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         resources.tokenServices(tokenServices).resourceId("service");
     }
 
+    /*
     @Override
     public void configure(HttpSecurity http) throws Exception {
         //-- define URL patterns to enable OAuth2 security
@@ -59,6 +41,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .and().authorizeRequests()
                 .antMatchers("/api/**").access("hasRole('ADMIN') or hasRole('USER')")
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
+
+
+        http.authorizeRequests()
+                .antMatchers("/").access("hasRole('USER')")
+                .antMatchers("/signup/**").hasRole("ADMIN");
     }
+    */
+
 
 }

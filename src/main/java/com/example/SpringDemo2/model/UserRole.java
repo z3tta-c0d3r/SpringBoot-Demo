@@ -1,5 +1,7 @@
 package com.example.SpringDemo2.model;
 
+import lombok.*;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,6 +10,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="USER_ROLES")
+@Data
+@Builder(toBuilder = true)
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserRole {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,18 +21,7 @@ public class UserRole {
 
     private String name;
 
-    UserRole() {
-    }
-
     public UserRole(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
         this.name = name;
     }
 }
