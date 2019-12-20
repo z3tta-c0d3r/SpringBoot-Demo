@@ -10,14 +10,17 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class TestController {
 
+    @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @RequestMapping("/test")
     public String test() {
         return "Hello World";
     }
 
-    @RequestMapping("/testroleadmin")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/testroleadmin")
     public String testpreauthorize(){return "Hello World Preauthorize ROLE ADMIN";}
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/testroleuser")
     public String testpreauthorizeuser(){return "Hello World Preauthorize ROLE USER";}
 }
