@@ -2,6 +2,7 @@ package com.example.SpringDemo2.config.oauth2;
 
 import com.example.SpringDemo2.config.details.CrmUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -36,7 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.debug(true);
+        web.ignoring()
+                .requestMatchers(PathRequest.toH2Console());
     }
 
     @Autowired
@@ -53,9 +55,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .csrf().disable()
+                .csrf().ignoringAntMatchers("/h2-console/**").and()
                 .authorizeRequests()
-                .antMatchers("/testroleadmin","/testroleuser","/test","/h2-console/**").permitAll()
+                .antMatchers("/testroleadmin", "/testroleuser", "/test", "/h2-console/**").permitAll()
                 .antMatchers("/signup").hasRole("ADMIN")
                 .antMatchers("/oauth/token").permitAll()
                 .anyRequest().authenticated()

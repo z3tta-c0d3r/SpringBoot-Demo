@@ -132,6 +132,15 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT", "ROLE_ADMIN")
                 .scopes("read", "write", "trust")
                 .accessTokenValiditySeconds(300)
+                .refreshTokenValiditySeconds(THIRTY_DAYS)
+                .and()
+                .withClient("crmClient2")
+                .secret("{noop}crmSuperSecret2")
+                .resourceIds("service")
+                .authorizedGrantTypes("client_credentials","refresh_token")
+                .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT", "ROLE_USER")
+                .scopes("read", "write", "trust")
+                .accessTokenValiditySeconds(300)
                 .refreshTokenValiditySeconds(THIRTY_DAYS);
     }
 
