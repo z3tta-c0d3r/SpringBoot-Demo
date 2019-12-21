@@ -3,17 +3,18 @@ package com.example.SpringDemo2.config.details;
 import com.example.SpringDemo2.config.details.CrmUserDetails;
 import com.example.SpringDemo2.model.User;
 import com.example.SpringDemo2.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("crmUserDetailsService")
+@RequiredArgsConstructor
 public class CrmUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     /**
      * Load User by username in authentication oauth

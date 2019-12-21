@@ -1,5 +1,6 @@
 package com.example.SpringDemo2.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,10 +23,9 @@ import java.util.Properties;
 @PropertySource({"classpath:application.properties"})
 @EnableJpaRepositories(basePackages = "com.example.SpringDemo2.repository")
 @EnableTransactionManagement
+@RequiredArgsConstructor
 public class DbConfig {
-
-    @Autowired
-    private Environment env;
+    private final Environment env;
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {

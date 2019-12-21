@@ -1,4 +1,3 @@
-security:
-  basic:
-    enabled: true
-    authorize-mode: NONE
+
+
+
