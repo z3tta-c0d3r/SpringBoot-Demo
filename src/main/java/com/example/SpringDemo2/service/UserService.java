@@ -15,12 +15,14 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Service(value = "UserService")
 @Slf4j
 @RequiredArgsConstructor
-public class UserService {
+public class UserService implements IUserService {
 
     private final UserRepository userRepository;
 
@@ -29,10 +31,18 @@ public class UserService {
      * @param user User
      * @return User
      */
+    @Override
     public User addUser(@NotNull User user) {
         String pwdencode = encoder().encode(user.getPassword());
         user.setPassword(pwdencode);
         return userRepository.save(user);
+    }
+
+    @Override
+    public List<User> findAll() {
+        List<User> listUser = new ArrayList<>();
+
+        return (List<User>) userRepository.findAll();
     }
 
     /**

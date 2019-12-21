@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.example.SpringDemo2.constants.Constants;
 import com.example.SpringDemo2.model.User;
 import com.example.SpringDemo2.model.UserRole;
 import lombok.AllArgsConstructor;
@@ -14,6 +15,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+/**
+ * User details for a oauth2
+ */
 @Data
 @Builder(toBuilder = true)
 @RequiredArgsConstructor
@@ -21,10 +25,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class CrmUserDetails implements UserDetails {
 
     private static final long serialVersionUID = 1L;
+
     private Collection<? extends GrantedAuthority> authorities;
     private String password;
     private String username;
 
+    /**
+     * Constructor
+     * @param user User
+     */
     public CrmUserDetails(User user) {
         this.username = user.getUsername();
         this.password = user.getPassword();
@@ -40,8 +49,8 @@ public class CrmUserDetails implements UserDetails {
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (UserRole role : roles) {
             String name = role.getName().toUpperCase();
-            if (!name.startsWith("ROLE_")) {
-                name = "ROLE_" + name;
+            if (!name.startsWith(Constants.ROLE)) {
+                name = Constants.ROLE + name;
             }
             authorities.add(new SimpleGrantedAuthority(name));
         }

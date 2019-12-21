@@ -41,8 +41,8 @@ class SpringDemo2ApplicationTests {
 	public void testPreAuthorizedAdmin() {
 		User user = User.builder()
 				.id(new Long(1L))
-				.username("testuser1")
-				.password("testuser2")
+				.username("testing-1")
+				.password("passwrd-1")
 				.roles(Arrays.asList(new UserRole("USER")))
 				.build();
 

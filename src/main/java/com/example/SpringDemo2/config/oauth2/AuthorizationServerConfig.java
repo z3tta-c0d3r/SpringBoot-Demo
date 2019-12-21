@@ -1,8 +1,13 @@
 package com.example.SpringDemo2.config.oauth2;
 
 import com.example.SpringDemo2.config.details.CrmUserDetailsService;
+import com.example.SpringDemo2.constants.Constants;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,24 +29,11 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 @Configuration
 @EnableAuthorizationServer
+@RequiredArgsConstructor
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
-    private static String REALM="CRM_REALM";
-    private static final int ONE_DAY = 60 * 60 * 24;
-    private static final int THIRTY_DAYS = 60 * 60 * 24 * 30;
 
     @Autowired
     private UserApprovalHandler userApprovalHandler;
-
-    @Autowired
-    @Qualifier("authenticationManagerBean")
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private CrmUserDetailsService crmUserDetailsService;
-
-    @Autowired
-    private ClientDetailsService clientDetailsService;
-
 
     @Autowired
     private DefaultTokenServices tokenServices;
@@ -52,6 +44,22 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private JwtAccessTokenConverter tokenConverter;
 
+    @Autowired
+    @Qualifier("authenticationManagerBean")
+    private AuthenticationManager authenticationManager;
+
+    private final CrmUserDetailsService crmUserDetailsService;
+    private final ClientDetailsService clientDetailsService;
+
+    @Value("${admin.oauth2.token.username}")
+    private String adminUsername;
+    @Value("${admin.oauth2.token.password}")
+    private String adminPassword;
+
+    @Value("${user.oauth2.token.username}")
+    private String userUserName;
+    @Value("${user.oauth2.token.password}")
+    private String userPassword;
 
     /**
      * Converter token with Jwt
@@ -60,7 +68,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Bean
     public JwtAccessTokenConverter tokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey("1234567890");
+        converter.setSigningKey(Constants.SIGN_KEY);
         return converter;
     }
 
@@ -125,23 +133,23 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-                .withClient("crmClient1")
-                .secret("{noop}crmSuperSecret")
-                .resourceIds("service")
+                .withClient(adminUsername)
+                .secret(adminPassword)
+                .resourceIds(Constants.RESOURCE_ID)
                 .authorizedGrantTypes("client_credentials","refresh_token")
                 .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT", "ROLE_ADMIN")
                 .scopes("read", "write", "trust")
-                .accessTokenValiditySeconds(300)
-                .refreshTokenValiditySeconds(THIRTY_DAYS)
+                .accessTokenValiditySeconds(Constants.ACCESS_SECONDS)
+                .refreshTokenValiditySeconds(Constants.THIRTY_DAYS)
                 .and()
-                .withClient("crmClient2")
-                .secret("{noop}crmSuperSecret2")
-                .resourceIds("service")
+                .withClient(userUserName)
+                .secret(userPassword)
+                .resourceIds(Constants.RESOURCE_ID)
                 .authorizedGrantTypes("client_credentials","refresh_token")
                 .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT", "ROLE_USER")
                 .scopes("read", "write", "trust")
-                .accessTokenValiditySeconds(300)
-                .refreshTokenValiditySeconds(THIRTY_DAYS);
+                .accessTokenValiditySeconds(Constants.ACCESS_SECONDS)
+                .refreshTokenValiditySeconds(Constants.THIRTY_DAYS);
     }
 
     /**

@@ -9,12 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -29,10 +27,21 @@ public class UserController {
      * @return ResponseEntity<?>
      */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    @PostMapping(value = "/signup")
     public ResponseEntity<?> signup(@RequestBody User user) {
         user.setRoles(Arrays.asList(new UserRole("USER")));
         User newUser = userService.addUser(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    /**
+     * Create one user in DB
+     * @return ResponseEntity<?>
+     */
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping(value = "/users")
+    public ResponseEntity<?> users() {
+        List<User> listUser = userService.findAll();
+        return new ResponseEntity<>(listUser, HttpStatus.CREATED);
     }
 }

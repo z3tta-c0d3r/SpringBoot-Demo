@@ -25,6 +25,7 @@ public class AppConfig {
     /**
      * Initialize user for http://localhost:8080/oauth/token
      */
+    /*
     @Bean
     public void initUser(){
        User user =  User.builder()
@@ -36,8 +37,9 @@ public class AppConfig {
         if (userRepository.count() == 0) {
             userRepository.save(user);
         }
-
     }
+
+     */
 
     /**
      * Password encrypt

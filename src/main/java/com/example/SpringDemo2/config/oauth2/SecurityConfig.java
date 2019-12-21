@@ -1,6 +1,7 @@
 package com.example.SpringDemo2.config.oauth2;
 
 import com.example.SpringDemo2.config.details.CrmUserDetailsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -21,14 +22,12 @@ import org.springframework.security.oauth2.provider.ClientDetailsService;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled=true, prePostEnabled=true)
+@EnableGlobalMethodSecurity(prePostEnabled=true)
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private ClientDetailsService clientDetailsService;
-
-    @Autowired
-    private CrmUserDetailsService crmUserDetailsService;
+    private final ClientDetailsService clientDetailsService;
+    private final CrmUserDetailsService crmUserDetailsService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {

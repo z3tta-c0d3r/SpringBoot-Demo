@@ -29,7 +29,6 @@ public class User {
     private Long id;
 
     private String username;
-
     private String password;
 
     @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
