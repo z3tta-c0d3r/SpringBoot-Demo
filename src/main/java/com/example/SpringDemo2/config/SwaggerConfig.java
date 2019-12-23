@@ -17,7 +17,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-@ComponentScan("com.example.SpringDemo2")
 public class SwaggerConfig implements WebMvcConfigurer {
 
     @Bean
@@ -25,13 +24,12 @@ public class SwaggerConfig implements WebMvcConfigurer {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                     .apis(RequestHandlerSelectors.basePackage("com.example.SpringDemo2.controller"))
-                    .paths(PathSelectors.any())
+                    .paths(PathSelectors.ant("/**"))
                     .build()
                 .pathMapping("/")
                 .apiInfo(getApiInfo())
                 .useDefaultResponseMessages(false)
                 .genericModelSubstitutes(ResponseEntity.class);
-
     }
 
     private ApiInfo getApiInfo() {
