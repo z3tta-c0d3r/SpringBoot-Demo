@@ -15,7 +15,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import java.util.Arrays;
 
 @Configuration
-@EnableWebMvc
 @ComponentScan(basePackages = {"com.example.SpringDemo2"})
 @AllArgsConstructor
 public class AppConfig {
