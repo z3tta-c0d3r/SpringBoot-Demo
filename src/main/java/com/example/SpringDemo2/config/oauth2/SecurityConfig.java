@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
        // web.ignoring()
        //         .requestMatchers(PathRequest.toH2Console());
-        web.ignoring().antMatchers("/v2/api-docs",
+        web.ignoring().mvcMatchers("/v2/api-docs",
                 "/configuration/ui",
                 "/swagger-resources",
                 "/configuration/security",
@@ -71,7 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/webjars/**").and()
                 .authorizeRequests()
                 .antMatchers("/testroleadmin", "/testroleuser", "/test","/h2-console/**").permitAll()
-                .antMatchers("/v2/api-docs",
+                .mvcMatchers("/v2/api-docs",
                         "/configuration/ui",
                         "/swagger-resources",
                         "/configuration/security",

@@ -24,12 +24,9 @@ public class SwaggerConfig implements WebMvcConfigurer {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                     .apis(RequestHandlerSelectors.basePackage("com.example.SpringDemo2.controller"))
-                    .paths(PathSelectors.ant("/**"))
+                    .paths(PathSelectors.any())
                     .build()
-                .pathMapping("/")
-                .apiInfo(getApiInfo())
-                .useDefaultResponseMessages(false)
-                .genericModelSubstitutes(ResponseEntity.class);
+                .apiInfo(getApiInfo());
     }
 
     private ApiInfo getApiInfo() {

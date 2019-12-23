@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Controller
+@RestController
 @Slf4j
 @RequestMapping("/")
 @Api(value = "Test System",tags = {"Test System Tag"})
