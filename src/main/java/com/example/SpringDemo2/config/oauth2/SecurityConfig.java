@@ -36,11 +36,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-       // web.ignoring()
-       //         .requestMatchers(PathRequest.toH2Console());
-        web.ignoring().antMatchers("/v2/api-docs",
+        web.ignoring().mvcMatchers("/v2/api-docs",
                 "/configuration/ui",
-                "/swagger-resources",
+                "/swagger-resources/**",
                 "/configuration/security",
                 "/swagger-ui.html",
                 "/webjars/**")
@@ -65,18 +63,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().ignoringAntMatchers("/h2-console/**","/v2/api-docs",
                 "/configuration/ui",
-                "/swagger-resources",
+                "/swagger-resources/**",
                 "/configuration/security",
                 "/swagger-ui.html",
-                "/webjars/**").and()
+                "/webjars/**","/api/**").and()
                 .authorizeRequests()
                 .antMatchers("/testroleadmin", "/testroleuser", "/test","/h2-console/**").permitAll()
-                .antMatchers("/v2/api-docs",
+                .mvcMatchers("/v2/api-docs",
                         "/configuration/ui",
-                        "/swagger-resources",
+                        "/swagger-resources/**",
                         "/configuration/security",
                         "/swagger-ui.html",
-                        "/webjars/**").permitAll()
+                        "/webjars/**","/api/**").permitAll()
                 .antMatchers("/signup").hasRole("ADMIN")
                 .antMatchers("/oauth/token").permitAll()
                 .anyRequest().authenticated()
