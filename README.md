@@ -30,7 +30,8 @@ SpringDemo2/
  │       │   │   └── ResourceServerConfig.java
  │       │   │
  │       │   ├── AppConfig.java
- │       │   └── DbConfig.java
+ │       │   ├── DbConfig.java
+ │       │   └── SwaggerConfig.java
  │       │
  |       ├── constants
  │       │   └── Constants.java

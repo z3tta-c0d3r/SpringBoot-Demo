@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @Slf4j
@@ -45,4 +46,16 @@ public class UserController {
         List<User> listUser = userService.findAll();
         return new ResponseEntity<>(listUser, HttpStatus.CREATED);
     }
+
+    /**
+     * Create one user in DB
+     * @return ResponseEntity<?>
+     */
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping(value = "/users/{id}")
+    public ResponseEntity<?> getUsersById(@PathVariable("id") long id) {
+        Optional<User> listUser = userService.findById(id);
+        return new ResponseEntity<>(listUser.get(), HttpStatus.CREATED);
+    }
+
 }
