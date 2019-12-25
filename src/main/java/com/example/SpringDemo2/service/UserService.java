@@ -1,23 +1,17 @@
 package com.example.SpringDemo2.service;
 
 import com.example.SpringDemo2.model.User;
-import com.example.SpringDemo2.model.UserRole;
 import com.example.SpringDemo2.repository.UserRepository;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service(value = "UserService")
 @Slf4j
@@ -38,6 +32,10 @@ public class UserService implements IUserService {
         return userRepository.save(user);
     }
 
+    /**
+     * Find all users in application
+     * @return
+     */
     @Override
     public List<User> findAll() {
         List<User> listUser = new ArrayList<>();
@@ -45,8 +43,15 @@ public class UserService implements IUserService {
         return (List<User>) userRepository.findAll();
     }
 
+    @Override
+    public Optional<User> findById(Long id) {
+        List<User> listUser = new ArrayList<>();
+
+        return userRepository.findById(id);
+    }
+
     /**
-     *
+     * Password encoder BCrypt
      * @return
      */
     public PasswordEncoder encoder() {
