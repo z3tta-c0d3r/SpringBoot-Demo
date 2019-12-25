@@ -12,6 +12,8 @@
 
 # File structure
 
+This project is a example for trainning with a lot of tools with java 8, spring-boot with spring security with jwt, H2 with JPA and junit test with mockito.
+
 ```
 SpringDemo2/
  │
@@ -76,3 +78,35 @@ SpringDemo2/
 ```
 
 # Introduction (https://jwt.io)
+
+
+
+# How to use this code?
+
+1. Make sure you have [Java 8](https://www.java.com/download/) and [Maven](https://maven.apache.org) installed
+
+2. Fork this repository and clone it
+  
+  ```
+  $ git clone https://github.com/<your-user>/SpringDemo2
+  ```
+  
+3. Navigate into the folder  
+
+  ```
+  $ cd SpringDemo2 (or other name)
+  ```
+
+4. Install dependencies
+
+  ```
+  $ mvn install
+  ```
+
+5. Run the project
+
+  ```
+  $ mvn spring-boot:run
+  ```
+
+6. Navigate to `http://localhost:8080/swagger-ui.html` in your browser to check everything is working correctly.
